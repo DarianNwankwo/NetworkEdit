@@ -1,0 +1,75 @@
+.fullview {
+    height: calc(100vh);
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+}
+
+.register-container {
+    background: white;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px 1px rgba(199,195,199,1);
+}
+
+.left-window, .right-window {
+    width: calc(50% - 25px);
+    float: left;
+}
+
+.left-window {
+    padding: 0 25px 0;
+    line-height: .8em;
+}
+
+.left-window::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    height: 50px;
+    width: 50px;
+    background-color: #b31b1b;
+    border-radius: 3px;
+    background-image: url("./person_silho.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0px 0px 5px 2px rgba(199,195,199,1);
+
+}
+
+.right-window img {
+    width: calc(100%);
+}
+
+.left-window h2 { 
+    font-weight: 400;
+}
+
+/* Form Styles */
+form > input {
+    margin-bottom: 5px;
+    width: 80%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 2px solid #707070;
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+input:focus {
+    border-color: #b31b1b;
+}
+
+button {
+    margin-top: 10px;
+    width: calc(80% + 24px);
+    padding: 15px;
+    background-color: #b31b1b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    box-shadow: 0px 0px 2px 2px rgba(199,195,199,1);
+}

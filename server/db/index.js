@@ -1,9 +1,5 @@
 const mysql = require("mysql");
 
-const  {
-  createUsersTable
-} = require("./utils.js");
-
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -11,8 +7,6 @@ const connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE
 });
-
-createUsersTable(connection);
 
 
 module.exports = connection;

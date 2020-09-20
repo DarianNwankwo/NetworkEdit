@@ -1,0 +1,40 @@
+.left-panel, .right-panel {
+    width: calc(50%);
+    height: calc(100vh);
+    float: left;
+    display: grid;
+    place-items: center;
+}
+
+.left-panel {
+    background-color: #f9f9f9;
+}
+
+.left-panel img {
+    width: 60%;
+}
+
+.right-panel {
+    background-color: #b31b1b;
+}
+
+.right-panel .intro-container {
+    /* height: 55%; */
+    width: 65%;
+    background-color: #f9f9f9;
+    border-radius: 7px;
+    padding: 1% 5% 2%;
+}
+
+.right-panel hr {
+    width: 25%;
+}
+
+.intro-container h2 {
+    text-align: center;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: space-around;
+}
