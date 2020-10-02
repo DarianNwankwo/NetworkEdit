@@ -12,22 +12,21 @@ function createUsersTable(connection) {
 
   let SQL_CREATE_TABLE = `
   CREATE TABLE IF NOT EXISTS Users (
-    ID INT NOT NULL,
-    FirstName VARCHAR(100) NOT NULL,
-    LastName VARCHAR(100) NOT NULL,
-    Email VARCHAR(320) NOT NULL,
-    PasswordHash BINARY(64) NOT NULL,
-    IsVerified BOOLEAN NOT NULL,
-    Age TINYINT NOT NULL,
+    ID INT NOT NULL AUTO_INCREMENT,
+    Fullname VARCHAR(200) NOT NULL,
+    Email VARCHAR(320) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(64) NOT NULL,
+    IsVerified BOOLEAN DEFAULT True,
+    Age TINYINT DEFAULT 0,
     Gender ENUM('Male', 'Female', 'Other'),
-    YearsOfWorkExperience TINYINT NOT NULL,
-    CountriesLivedIn TINYINT NOT NULL,
-    NetworkDiversity TINYINT NOT NULL,
-    AccessToEliteContacts TINYINT NOT NULL,
-    ObligationToNetwork TINYINT NOT NULL,
-    NetworkReliabilityForTechnicalAdvice TINYINT NOT NULL,
-    NetworkReliabilityForBusinessGuidance TINYINT NOT NULL,
-    NetworkReliabilityForFinancialSupport TINYINT NOT NULL,
+    YearsOfWorkExperience TINYINT DEFAULT 0,
+    CountriesLivedIn TINYINT DEFAULT 1,
+    NetworkDiversity TINYINT DEFAULT 0,
+    AccessToEliteContacts TINYINT DEFAULT 0,
+    ObligationToNetwork TINYINT DEFAULT 0,
+    NetworkReliabilityForTechnicalAdvice TINYINT DEFAULT 0,
+    NetworkReliabilityForBusinessGuidance TINYINT DEFAULT 0,
+    NetworkReliabilityForFinancialSupport TINYINT DEFAULT 0,
     PRIMARY KEY (ID)
   );
   `;
@@ -46,4 +45,4 @@ function createUsersTable(connection) {
 
 module.exports = {
   createUsersTable
-}
+};

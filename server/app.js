@@ -6,33 +6,40 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const passport = require("passport");
 const cors = require("cors");
+const session = require("express-session");
 
-require("./config/passport-setup");
 const database = require("./db");
-const indexRouter = require("./routes/index");
-const authRouter = require("./routes/auth");
 const { createUsersTable } = require("./db/utils");
 
 const app = express();
 createUsersTable(database);
 
-// passport setup start
-// passport.use()
-// passport setup end
-
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(
   cors({
     origin: process.env.CLIENT,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
   })
 );
+app.use(logger("dev"));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(
+  cookieParser(process.env.SESSION_SECRET)
+);
+require("./config/passport-setup");
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+const indexRouter = require("./routes/index");
+const authRouter = require("./routes/auth");
 
 
 app.use("/", indexRouter);
