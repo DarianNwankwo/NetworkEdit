@@ -10,32 +10,25 @@ const router = express.Router();
 //   });
 //   res.status(200).json({ success: true });
 // });
-router.post("/register", (req, res, next) => {
-  passport.authenticate("local-register", (err, user, info) => {
-    if (err) { throw err; }
-    if (!user) { res.send("No user exists"); }
-    else {
-      req.logIn(user, (err) => {
-        if (err) { throw err; }
-        res.send("Successfully Authenticated");
-        console.log(req.user);
-      })
-    }
-  })(req, res, next);
-});
+router.post(
+  "/register",
+  passport.authenticate("local-register"),
+  (req, res) => {
+    res.sendStatus(200);
+  }
+);
 
 
 router.post(
   "/login",
-  passport.authenticate("local-login"),
-  (req, res) => {
-    res.cookie("userid", req.user.ID, {
-      maxAge: 900000,
-      httpOnly: true
-    });
-    res.json({});
-  }
+  passport.authenticate("local-login")
 );
 
+
+router.post(
+  "/logout",
+  (req, res) => {
+    req.logOut();
+});
 
 module.exports = router;

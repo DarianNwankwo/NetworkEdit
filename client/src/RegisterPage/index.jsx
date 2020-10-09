@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Redirect, withRouter } from "react-router-dom";
+import FlashMessage from "react-flash-message";
 import bcrypt from "bcryptjs";
 import "./styles.css";
 
@@ -17,7 +18,9 @@ class RegisterPage extends Component {
       fullname: "",
       email: "",
       password: "",
-      passwordRepeated: ""
+      passwordRepeated: "",
+      pwdError: false,
+      userError: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,18 +36,19 @@ class RegisterPage extends Component {
     event.preventDefault();
 
     if (this.state.password.localeCompare(this.state.passwordRepeated)) {
-      alert("Passwords must match!");
+      this.setState({
+        pwdError: true
+      })
     } else {
-      console.log(bcrypt.hashSync(this.state.password, NUM_OF_SALT_ROUNDS));
       const formBody = {
         password: bcrypt.hashSync(this.state.password, NUM_OF_SALT_ROUNDS),
         email: this.state.email,
         fullname: this.state.fullname
       }
 
-      // (TODO): Access this via a environment variable
       let url = "http://localhost:3000/auth/register";
-      const response = await fetch(url, {
+
+      const submitRegistrationForm = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -52,8 +56,14 @@ class RegisterPage extends Component {
         body: JSON.stringify(formBody),
         credentials: "include"
       });
-      console.log(response.status);
-      this.props.history.push("/network-analysis");
+
+      if (submitRegistrationForm.status === 200) {
+        this.props.history.push("/questionnaire")
+      } else {
+        this.setState({
+          userError: true
+        })
+      }
     }
   }
 
@@ -74,6 +84,22 @@ class RegisterPage extends Component {
               <input type="password" id="password-repeat" name="passwordRepeated" placeholder="Retype Password" value={this.state.passwordRepeated} onChange={this.handleChange} required /><br />
               <button>Sign Up Now</button>
               {/* <button type="button">Sign Up With Google</button> */}
+              {
+                this.state.pwdError  &&
+                  <FlashMessage duration={5000} persistOnHover={true} className="error">
+                    <div className="error">
+                      <strong>Both password fields must be the same.</strong>
+                    </div>
+                  </FlashMessage>
+              }
+              {
+                this.state.userError  &&
+                  <FlashMessage duration={5000} persistOnHover={true}>
+                    <div className="error">
+                      <strong>That user already exists. Visit the login page!</strong>
+                    </div>
+                  </FlashMessage>
+              }
             </form>
             <p>
               <Link to="/">Back Home</Link>

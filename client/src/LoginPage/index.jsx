@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Redirect, withRouter } from "react-router-dom";
+import FlashMessage from "react-flash-message";
 import bcrypt from "bcryptjs";
 import "./styles.css";
 
@@ -16,7 +17,7 @@ class LoginPage extends Component {
         this.state = {
             email: "",
             password: "",
-            errorMsg: ""
+            error: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,10 +51,10 @@ class LoginPage extends Component {
         if (response.status === 200) {
             this.props.history.push("/network-analysis");
         } else {
-            alert("The Email Address or Password You've Entered Does Not Match");
             this.setState({
                 password: "",
-                email: ""
+                email: "",
+                error: true
             })
         }
     }
@@ -73,6 +74,14 @@ class LoginPage extends Component {
                             <input type="password" id="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required /><br/>
                             <button>Login</button>
                             {/* <button type="button">Sign Up With Google</button> */}
+                            {
+                                this.state.error  &&
+                                <div className="error">
+                                    <FlashMessage duration={5000}>
+                                        <strong>Sorry, either your password or email was incorrect. Try again.</strong>
+                                    </FlashMessage>
+                                </div>
+                            }
                         </form>
                         <p>
                             <Link to="/">Back Home</Link>

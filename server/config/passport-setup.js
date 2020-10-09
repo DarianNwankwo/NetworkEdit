@@ -13,23 +13,30 @@ passport.use("local-register", new LocalStrategy({
   async (req, email, password, done) => {
     let { fullname } = req.body;
 
-    let CREATE_USER_SQL = `
-      INSERT INTO Users (Fullname, Email, PasswordHash)
-      VALUES ("${fullname}", "${email}", "${password}");
-    `;
+    // Check if the user already exists. If they do, give an error
+    let CHECK_USER_SQL = `SELECT email FROM Users WHERE email="${email}";`;
+    await database.query(CHECK_USER_SQL, async (err1, rows) => {
+      if (err1) { return done(err1); }
+      if (rows.length > 0) { return done("User already exists"); }
 
-    await database.query(CREATE_USER_SQL, async (err, okpacket) => {
-      console.log("OkPacket: ", okpacket);
-      if (err) { return done(err); }
-      if (okpacket.affectedRows > 0) {
-        let FIND_USER_BY_ID_SQL = `SELECT * FROM Users WHERE ID=${okpacket.insertId};`;
-        await database.query(FIND_USER_BY_ID_SQL, async(err, rows) => {
-          if (err) { return done(err); }
-          else { return done(null, rows[0]); }
-        })
-      } else {
-        return done(new Error("User already exists..."));
-      }
+      // If the user is novel, create the user
+      let CREATE_USER_SQL = `
+        INSERT INTO Users (Fullname, Email, PasswordHash)
+        VALUES ("${fullname}", "${email}", "${password}");
+      `;
+
+      await database.query(CREATE_USER_SQL, async (err2, okpacket) => { 
+        if (err2) { return done(err2); }
+        if (okpacket.affectedRows > 0) {
+          // If we've successfully created the user, grab that user and pass it to done callback.
+          let FIND_USER_BY_ID_SQL = `SELECT * FROM Users WHERE ID=${okpacket.insertId};`;
+
+          await database.query(FIND_USER_BY_ID_SQL, async(err3, rows) => {
+            if (err3) { return done(err3); }
+            else { return done(null, rows[0]); }
+          });
+        }
+      });
     });
   })
 );

@@ -1,3 +1,15 @@
+.error {
+    position: absolute;
+    background: lightcoral;
+    padding: 20px;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 50px;
+    box-shadow: lightcoral;
+    box-shadow: 0px 0px 5px 2px rgba(199,195,199,1);
+}
+
 .fullview {
     height: calc(100vh);
     display: grid;
