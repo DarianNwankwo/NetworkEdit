@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import "./style.css";
 import formFieldsData from "./formFields";
-import formFields from "./formFields";
 
 
 class Questionnaire extends Component {
@@ -23,12 +22,22 @@ class Questionnaire extends Component {
     }
 
     getFormFields() {
+        const datalistStyle = {
+            display: "flex",
+            justifyContent: "space-between"
+        };
         const formFields = formFieldsData.map(data => {
             if (data.type == "range") {
+                const options = ["1", "2", "3", "4", "5"].map(n => {
+                    return <option value={ n } label={ n } style={{ display: "inline-block" }}></option>
+                })
                 return (
                     <tr>
                         <td>{ data.question }</td>
-                        <td><input type={ data.type } min="1" max="5" id={ data.for_id_name} name={ data.for_id_name } /></td>
+                        <td>
+                            <input type={ data.type } min="1" max="5" id={ data.for_id_name} name={ data.for_id_name } list="steplist" />
+                            <datalist style={ datalistStyle } id="steplist">{ options }</datalist>
+                        </td>
                     </tr>
                 );
             } else if (data.type == "number") {
@@ -62,17 +71,17 @@ class Questionnaire extends Component {
         const formFields = this.getFormFields();
 
         return (
-            <div className="container">
+            <div>
                 <h1>Part 1: The Questionnaire</h1>
                 <form>
-                    <table>
+                    <table cellSpacing="0">
                         <tbody>
                             { formFields }
                         </tbody>
                     </table>
                 </form>
             </div>
-        )
+        );
     }
 }
 

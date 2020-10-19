@@ -21,7 +21,10 @@ router.post(
 
 router.post(
   "/login",
-  passport.authenticate("local-login")
+  passport.authenticate("local-login"),
+  (req, res) => {
+    res.sendStatus(200);
+  }
 );
 
 

@@ -58,7 +58,7 @@ class RegisterPage extends Component {
       });
 
       if (submitRegistrationForm.status === 200) {
-        this.props.history.push("/questionnaire")
+        this.props.history.push("/network-analysis")
       } else {
         this.setState({
           userError: true

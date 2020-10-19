@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+import Questionnaire from "../Questionnaire";
+import Connections from "../Connections";
+import "./style.css";
+
 
 async function getRootRequest() {
   const response = await fetch("http://localhost:3000");
@@ -32,9 +36,14 @@ class NetworkAnalysisPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Network Analysis Page</h1>
-        <h2>{ this.state.message }</h2>
+      <div className="container">
+        <div className="survey">
+          <h1>Network Analysis Page</h1>
+          <h2>{ this.state.message }</h2>
+          <Questionnaire />
+          <Connections />
+          {/* <ConnectionsRelationships /> */}
+        </div>
       </div>
     );
   }  

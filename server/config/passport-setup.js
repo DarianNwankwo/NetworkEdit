@@ -51,6 +51,8 @@ passport.use("local-login", new LocalStrategy({
     await database.query(FIND_USER_BY_EMAIL_SQL, async (err, rows) => {
       if (rows.length > 0) {
         await bcrypt.compare(password, rows[0].PasswordHash, (err, result) => {
+          console.log("Error: ", err);
+          console.log("Result: ", result);
           if (result) { return done(null, rows[0]); }
           else { return done(null, false); }
         });
