@@ -10,18 +10,6 @@ class Connections extends Component {
         return (
             <div>
                 <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                <h1>Part 2: Your Connections</h1>
-                
             </div>
         );
     }

@@ -18,6 +18,6 @@ then
   exit $E_BADARGS
 fi
  
-$MYSQL -u $2 -p -e "$SQL"
+$MYSQL -u root -p -e "$SQL"
 
 ok "Database $1 created. Privileges have been granted to $2"

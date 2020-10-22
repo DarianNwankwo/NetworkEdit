@@ -5,6 +5,9 @@ import Connections from "../Connections";
 import "./style.css";
 
 
+const SURVEY_SECTION_COUNT = 3;
+
+
 async function getRootRequest() {
   const response = await fetch("http://localhost:3000");
   const data = await response.json();
@@ -14,7 +17,9 @@ async function getRootRequest() {
 class NetworkAnalysisPage extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      formIndex: 0,
+    };
     this.getRootRequest = this.getRootRequest.bind(this);
   }
 
@@ -30,6 +35,20 @@ class NetworkAnalysisPage extends Component {
     })
   }
 
+  hanldePrevious() {
+
+  }
+
+  handleNext() {
+    this.setState(prevState => {
+      // this
+      return {
+        ...prevState,
+        formIndex: prevState.formIndex <= 1 ? prevState.formIndex + 1 : SURVEY_SECTION_COUNT
+      };
+    })
+  }
+
   componentDidMount() {
     this.getRootRequest();
   }
@@ -41,8 +60,13 @@ class NetworkAnalysisPage extends Component {
           <h1>Network Analysis Page</h1>
           <h2>{ this.state.message }</h2>
           <Questionnaire />
-          <Connections />
+          {/* <Connections /> */}
           {/* <ConnectionsRelationships /> */}
+          <div className="button-container">
+            <button onClick={this.hanldePrevious}>Previous</button>
+            <button onClick={this.handleNext}>Next</button>
+            <button onClick={this.handleFormTransition}>Submit</button>
+          </div>
         </div>
       </div>
     );

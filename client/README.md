@@ -1,3 +1,19 @@
+# Client
+Some decisions have been idiomatic, but the client is responsible for collecting survey
+information and sending it to our server for processing. Each folder in `src` contains
+a component or container responsible for something in the UI and, possibly, managing
+state.
+
+The following containers are straight-forward: `RegisterPage`, `LandingPage`, `LoginPage`
+The following, not so much, possibly.
+- `NetworkAnalysis`: Composed of `Questionnaire`, `Connections`, `ConnectionsRelationships` (yet to be created).
+
+Each one of the nested components in NetworkAnalysis handles a part of the survey that
+is hosted [here](http://ezras-network.herokuapp.com/)
+
+<hr>
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
